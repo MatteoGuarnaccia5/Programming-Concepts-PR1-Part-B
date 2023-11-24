@@ -26,7 +26,7 @@ public class HealthBar extends Actor
         update();
         
         //this will need to be changed to when a player is hit. keep health decrease the same
-        if(Greenfoot.isKeyDown("space"))
+        if(Greenfoot.isKeyDown("W"))
         {
          health -= 1.5;
         }

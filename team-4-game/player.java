@@ -10,6 +10,11 @@ public class player extends Actor
 {
     private int playerHealth = 100;
     private int playerShield = 0;
+    
+    public int frame = 1;
+    
+    GreenfootImage attackImage = new GreenfootImage("attackImage.png");
+    public GreenfootImage image = getImage();
     /**
      * Act - do whatever the player wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
@@ -22,7 +27,7 @@ public class player extends Actor
     {
         this.width = width;
         this.height = height;
-        GreenfootImage image = getImage();
+        
         image.scale(35,50);
         setImage(image);
     }
@@ -30,6 +35,8 @@ public class player extends Actor
     public void act()
     {
         move();
+        attack(5);
+        setImage(attackImage);
     }
     
     public void move()
@@ -58,5 +65,18 @@ public class player extends Actor
             x -= speed;
         }
         setLocation(x, y);
+    }
+    
+    public void attack(int damage)
+    {
+        if(Greenfoot.isKeyDown("space"))
+        {
+            Enemy enemy = (Enemy) getOneIntersectingObject(Enemy.class);
+            if(enemy != null)
+            {
+                enemy.health -=damage;
+                setImage(attackImage);
+            }
+        }
     }
 }
