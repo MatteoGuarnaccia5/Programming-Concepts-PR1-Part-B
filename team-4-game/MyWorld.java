@@ -16,9 +16,9 @@ public class MyWorld extends World
     public MyWorld()
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
-        super(600, 400, 1);
+        super(1000, 600, 1);
         Enemy enemy1 = new Enemy();
-        player player = new player();
+        player player = new player(30, 30);
         prepare();
     }
     /**
@@ -29,7 +29,7 @@ public class MyWorld extends World
     {
         Enemy enemy = new Enemy();
         addObject(enemy,398,182);
-        player player = new player();
+        player player = new player(30, 30);
         addObject(player,137,187);
     }
 }
