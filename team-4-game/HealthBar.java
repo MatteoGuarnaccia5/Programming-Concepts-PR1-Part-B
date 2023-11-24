@@ -5,7 +5,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class HealthBar extends player
+public class HealthBar extends Actor
 {
     int health = 100;
     int healthBarWidth = 100;
