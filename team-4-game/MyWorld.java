@@ -19,6 +19,7 @@ public class MyWorld extends World
         super(600, 400, 1);
         Enemy enemy1 = new Enemy();
         player player = new player();
+        HealthBar playerHealthBar = new HealthBar();
         prepare();
     }
     /**
@@ -31,5 +32,15 @@ public class MyWorld extends World
         addObject(enemy,398,182);
         player player = new player();
         addObject(player,137,187);
+        HealthBar playerHealthBar = new HealthBar();
+        addObject(playerHealthBar, 55, 15);
+    }
+    
+    public void gameOver(){
+            removeObjects(getObjects(Actor.class));
+            GreenfootImage bg = getBackground();
+            GreenfootImage txtImg = new GreenfootImage("GAME\nOVER", 80, Color.WHITE, Color.BLACK);
+            bg.drawImage(txtImg, (bg.getWidth()-txtImg.getWidth())/2, (bg.getHeight()-txtImg.getHeight())/2);
+            Greenfoot.stop(); 
     }
 }
