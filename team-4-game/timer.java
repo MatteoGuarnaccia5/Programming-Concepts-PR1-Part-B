@@ -14,6 +14,7 @@ public class timer extends Actor
      */
     int seconds;
     int timer;
+    Boolean complete = false;
     
     public timer(int seconds) {
         this.seconds = seconds;
@@ -29,8 +30,14 @@ public class timer extends Actor
         }
         if (timer < (-1)) {
             getWorld().removeObjects(getWorld().getObjects(timer.class));
+            this.complete = true;
         }
     }
+    
+    public Boolean checkDone() {
+        return this.complete;
+    }
+    
     public void updateImage() {
         setImage(new GreenfootImage("Time Before Start: "+timer/55, 50, Color.BLACK, Color.WHITE));
     }
