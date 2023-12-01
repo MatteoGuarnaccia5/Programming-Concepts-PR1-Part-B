@@ -19,7 +19,6 @@ public class MyWorld extends World
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(1000, 600, 1);
         addObject(main_player, getWidth()/3, getHeight()/3);
-        HealthBar playerHealthBar = new HealthBar();
         prepare();
     }
     /**
@@ -30,8 +29,6 @@ public class MyWorld extends World
     {
         Enemy enemy = new Enemy(main_player);
         addObject(enemy,398,182);
-        //player player = new player(30, 30);
-        //addObject(player,137,187);
         HealthBar playerHealthBar = new HealthBar();
         addObject(playerHealthBar, 55, 15);
     }

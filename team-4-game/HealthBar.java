@@ -26,10 +26,6 @@ public class HealthBar extends Actor
         update();
         
         //this will need to be changed to when a player is hit. keep health decrease the same
-        if(Greenfoot.isKeyDown("W"))
-        {
-         health -= 1.5;
-        }
         
     }
     
@@ -48,6 +44,6 @@ public class HealthBar extends Actor
     
     public void hitByEnemy()
     {
-       
+       health -= 1.5;
     }
 }

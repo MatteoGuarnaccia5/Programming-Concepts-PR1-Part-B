@@ -47,7 +47,6 @@ public class player extends Actor
     {
         move();
         attack(2.5);//actual attack damage is double the number entered. Current enemy health is 10
-        //setImage(attackImage);
         animateWalking();
     }
     
@@ -60,25 +59,21 @@ public class player extends Actor
         if (Greenfoot.isKeyDown("down") && !isAtEdge())
         {
             y += speed;
-            //animateWalking();
         }
         
         if (Greenfoot.isKeyDown("up") && y > speed)
         {
             y -= speed;
-            //animateWalking();
         }
         
         if (Greenfoot.isKeyDown("right") && !isAtEdge())
         {
             x += speed;
-            //animateWalking();
         }
         
         if (Greenfoot.isKeyDown("left") && x > speed)
         {
             x -= speed;
-            //animateWalking();
         }
         setLocation(x, y);
     }
@@ -100,7 +95,6 @@ public class player extends Actor
                 newImage.mirrorHorizontally();
             }
         setImage(newImage);
-        //image =getImage();
         }
         
         xPos = getX();
@@ -122,8 +116,5 @@ public class player extends Actor
             Greenfoot.delay(4);
         }
         setImage(image);
-        
-        
     }
-    
 }
