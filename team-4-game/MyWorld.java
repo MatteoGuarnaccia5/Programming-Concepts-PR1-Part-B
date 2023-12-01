@@ -63,8 +63,8 @@ public class MyWorld extends World
     }
     
     
-    public void spawnHealthItem()
-    {
+public void spawnHealthItem()
+{
         if(Greenfoot.getRandomNumber(200) == 1)
         {
      
@@ -72,7 +72,7 @@ public class MyWorld extends World
         int y = Greenfoot.getRandomNumber(600);
      
         addObject(new ItemHealth(), x, y);
-}
+        }
 }
 public void spawn_enemy()
 {
