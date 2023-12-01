@@ -8,5 +8,5 @@ comment2.target=void\ act()
 comment3.params=
 comment3.target=void\ move()
 comment4.params=damage
-comment4.target=void\ attack(int)
+comment4.target=void\ attack(double)
 numComments=5

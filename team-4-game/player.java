@@ -13,7 +13,7 @@ public class player extends Actor
     
     public int frame = 1;
     
-    GreenfootImage attackImage = new GreenfootImage("attackImage.png");
+    public GreenfootImage attackImage = new GreenfootImage("penguin-attackV2.png");
     public GreenfootImage image = getImage();
     /**
      * Act - do whatever the player wants to do. This method is called whenever
@@ -29,14 +29,15 @@ public class player extends Actor
         this.height = height;
         
         image.scale(35,50);
+        attackImage.scale(50,35);
         setImage(image);
     }
     
     public void act()
     {
         move();
-        attack(5);
-        setImage(attackImage);
+        attack(2.5);//actual attack damage is double the number entered. Current enemy health is 10
+        //setImage(attackImage);
     }
     
     public void move()
@@ -67,16 +68,22 @@ public class player extends Actor
         setLocation(x, y);
     }
     
-    public void attack(int damage)
+    public void attack(double damage)
     {
         if(Greenfoot.isKeyDown("space"))
         {
+            setImage(attackImage);
             Enemy enemy = (Enemy) getOneIntersectingObject(Enemy.class);
             if(enemy != null)
             {
                 enemy.health -=damage;
-                setImage(attackImage);
+                
             }
+            Greenfoot.delay(4);
         }
+        setImage(image);
+        
+        
     }
+    
 }
