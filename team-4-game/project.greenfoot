@@ -1,12 +1,11 @@
 #Greenfoot project file
 class.Enemy.image=seahorse.png
-class.MyWorld.image=wet-blue.jpg
-class.player.image=tux.png
+class.player.image=penguinV2.png
 dependency1.from=MyWorld
 dependency1.to=HealthBar
 dependency1.type=UsesDependency
 dependency2.from=MyWorld
-dependency2.to=player
+dependency2.to=HealthBar
 dependency2.type=UsesDependency
 dependency3.from=MyWorld
 dependency3.to=Enemy
