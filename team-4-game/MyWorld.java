@@ -10,56 +10,53 @@ import java.util.*;
  */
 public class MyWorld extends World
 {
-
-    /**
-     * Constructor for objects of class MyWorld.
-     * 
-     */
     public player main_player = new player(30, 30);
     // spawn constants needed
     int count = 1;
     int spawn_speed = 50;
     int spawn_cap = 10;
     int random_spawn;
+    timer timer;
+    Boolean startGame = false;
     public MyWorld()
     {    
-        // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(1000, 600, 1);
-        addObject(main_player, getWidth()/3, getHeight()/3);
         prepare();
-        timer timer = new timer(5);
+        timer = new timer(5);
         addObject(timer, 500, 300);
     }
     
-
-    
-    /**
-     * Prepare the world for the start of the program.
-     * That is: create the initial objects and add them to the world.
-     */
     private void prepare()
     {
         HealthBar playerHealthBar = new HealthBar();
         addObject(playerHealthBar, 55, 15);
-        long startTime = System.currentTimeMillis();
-        long endTime;
-        Boolean done = false;
     }
-    public void act()
-    {
-        spawnHealthItem();
-        count++;
-        if (count < spawn_cap*spawn_speed){
-            spawn_enemy();
+    
+    public void createPlayer() {
+        addObject(main_player, 300, 300);
+    }
+    
+    public void act() {
+        if (startGame == false) {
+            if (timer.checkDone() == true) {
+                createPlayer();
+                startGame = true;
+            }
+        } else {
+            spawnHealthItem();
+            count++;
+            if (count < spawn_cap*spawn_speed){
+                spawn_enemy();
+            }
         }
     }
         
     public void gameOver(){
-            removeObjects(getObjects(Actor.class));
-            GreenfootImage bg = getBackground();
-            GreenfootImage txtImg = new GreenfootImage("GAME\nOVER", 80, Color.WHITE, Color.BLACK);
-            bg.drawImage(txtImg, (bg.getWidth()-txtImg.getWidth())/2, (bg.getHeight()-txtImg.getHeight())/2);
-            Greenfoot.stop(); 
+        removeObjects(getObjects(Actor.class));
+        GreenfootImage bg = getBackground();
+        GreenfootImage txtImg = new GreenfootImage("GAME\nOVER", 80, Color.WHITE, Color.BLACK);
+        bg.drawImage(txtImg, (bg.getWidth()-txtImg.getWidth())/2, (bg.getHeight()-txtImg.getHeight())/2);
+        Greenfoot.stop(); 
     }
     
     
