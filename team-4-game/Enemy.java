@@ -20,7 +20,7 @@ public class Enemy extends Actor
         //this will need to be changed to be varibale depending on level
         //also need to be dependent on 'attack' from player not key press
         if(Greenfoot.isKeyDown("Q")){
-            health -= 10;
+            health -= 5;
         }
         if(health <=0){
             getWorld().removeObject(this);
