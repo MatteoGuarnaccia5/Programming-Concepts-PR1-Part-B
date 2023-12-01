@@ -9,6 +9,8 @@ import java.util.*;
  */
 public class Enemy extends Actor
 {
+    
+    int health = 10;
     /**
      * Act - do whatever the Enemy wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
@@ -23,6 +25,10 @@ public class Enemy extends Actor
         // Add your action code here.
         //move_around();
         follow();
+
+        if(health <=0){
+            getWorld().removeObject(this);
+        }
     }
     public void move_around()
     {

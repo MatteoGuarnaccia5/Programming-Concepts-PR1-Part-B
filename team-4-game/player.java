@@ -8,12 +8,82 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class player extends Actor
 {
+    private int playerHealth = 100;
+    private int playerShield = 0;
+    
+    public int frame = 1;
+    
+    public GreenfootImage attackImage = new GreenfootImage("penguin-attackV2.png");
+    public GreenfootImage image = getImage();
     /**
      * Act - do whatever the player wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
+    Integer width;
+    Integer height;
+    Integer speed = 2;
+    
+    public player(int width, int height)
+    {
+        this.width = width;
+        this.height = height;
+        
+        image.scale(35,50);
+        attackImage.scale(50,35);
+        setImage(image);
+    }
+    
     public void act()
     {
-        // Add your action code here.
+        move();
+        attack(2.5);//actual attack damage is double the number entered. Current enemy health is 10
+        //setImage(attackImage);
     }
+    
+    public void move()
+    {
+        int x = getX();
+        int y = getY();
+        int halfWidth = width / 2;
+        
+        if (Greenfoot.isKeyDown("down") && !isAtEdge())
+        {
+            y += speed;
+        }
+        
+        if (Greenfoot.isKeyDown("up") && y > speed)
+        {
+            y -= speed;
+        }
+        
+        if (Greenfoot.isKeyDown("right") && !isAtEdge())
+        {
+            x += speed;
+        }
+        
+        if (Greenfoot.isKeyDown("left") && x > speed)
+        {
+            x -= speed;
+        }
+        setLocation(x, y);
+    }
+    
+    public void attack(double damage)
+    {
+        if(Greenfoot.isKeyDown("space"))
+        {
+            setImage(attackImage);
+            Enemy enemy = (Enemy) getOneIntersectingObject(Enemy.class);
+            if(enemy != null)
+            {
+                enemy.health -=damage;
+                
+            }
+            Greenfoot.delay(4);
+        }
+        setImage(image);
+        
+        
+    }
+    
 }
