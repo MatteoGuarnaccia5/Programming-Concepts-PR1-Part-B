@@ -16,6 +16,11 @@ public class MyWorld extends World
      * 
      */
     public player main_player = new player(30, 30);
+    // spawn constants needed
+    int count = 1;
+    int spawn_speed = 50;
+    int spawn_cap = 10;
+    int random_spawn;
     public MyWorld()
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
@@ -26,10 +31,7 @@ public class MyWorld extends World
         addObject(timer, 500, 300);
     }
     
-    public void act()
-    {
-        spawnHealthItem();
-    }
+
     
     /**
      * Prepare the world for the start of the program.
@@ -37,13 +39,19 @@ public class MyWorld extends World
      */
     private void prepare()
     {
-        Enemy enemy = new Enemy(main_player);
-        addObject(enemy,398,182);
         HealthBar playerHealthBar = new HealthBar();
         addObject(playerHealthBar, 55, 15);
         long startTime = System.currentTimeMillis();
         long endTime;
         Boolean done = false;
+    }
+    public void act()
+    {
+        spawnHealthItem();
+        count++;
+        if (count < spawn_cap*spawn_speed){
+            spawn_enemy();
+        }
     }
         
     public void gameOver(){
@@ -53,7 +61,7 @@ public class MyWorld extends World
             bg.drawImage(txtImg, (bg.getWidth()-txtImg.getWidth())/2, (bg.getHeight()-txtImg.getHeight())/2);
             Greenfoot.stop(); 
     }
-    public void spawn_enemy(){}
+    
     
     public void spawnHealthItem()
     {
@@ -65,5 +73,22 @@ public class MyWorld extends World
      
         addObject(new ItemHealth(), x, y);
 }
+}
+public void spawn_enemy()
+{
+        if(count % spawn_speed == 0)
+        {
+            random_spawn = Greenfoot.getRandomNumber(8);
+            switch(random_spawn){
+                case 0 : addObject(new Enemy(main_player), 0, 0); break;
+                case 1 : addObject(new Enemy(main_player), getWidth()/2, 0); break;
+                case 2 : addObject(new Enemy(main_player), getWidth(), 0); break;
+                case 3 : addObject(new Enemy(main_player), getWidth(), getHeight()/2); break;
+                case 4 : addObject(new Enemy(main_player), getWidth(), getHeight() ); break;
+                case 5 : addObject(new Enemy(main_player), getWidth()/2, getHeight()); break;
+                case 6 : addObject(new Enemy(main_player), 0, getHeight()); break;
+                case 7 : addObject(new Enemy(main_player), 0, getHeight()/2); break;
+            }
+        }
     }
 }
