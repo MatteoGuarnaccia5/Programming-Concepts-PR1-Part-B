@@ -21,7 +21,7 @@ public class player extends Actor
      */
     Integer width;
     Integer height;
-    Integer speed = 2;
+    Integer speed = 5; //originally 2
     
     public player(int width, int height)
     {
