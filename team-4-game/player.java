@@ -15,13 +15,17 @@ public class player extends Actor
     
     public GreenfootImage attackImage = new GreenfootImage("penguin-attackV2.png");
     public GreenfootImage image = getImage();
+    public String[] walkingImages = {"penguin-walking1.png","penguin-walking2.png", "penguin-walking3.png"};
+    public int currentImage = 0;
     /**
      * Act - do whatever the player wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     Integer width;
     Integer height;
-    Integer speed = 5; //originally 2
+    Integer speed = 3;
+    int xPos;
+    int yPos;
     
     public player(int width, int height)
     {
@@ -33,11 +37,17 @@ public class player extends Actor
         setImage(image);
     }
     
+    public void addedToWorld()
+    {
+        xPos = getX();
+        yPos = getY();
+    }
+    
     public void act()
     {
         move();
         attack(2.5);//actual attack damage is double the number entered. Current enemy health is 10
-        //setImage(attackImage);
+        animateWalking();
     }
     
     public void move()
@@ -68,6 +78,30 @@ public class player extends Actor
         setLocation(x, y);
     }
     
+    public void animateWalking(){
+        if(getX()!=xPos || getY()!=yPos)
+        {
+            currentImage ++;
+            if(currentImage >= walkingImages.length)
+            {
+            currentImage = 0;
+            }
+        
+            GreenfootImage newImage = new GreenfootImage(walkingImages[currentImage]);
+            newImage.scale(35,50);
+        
+            if(getX()<xPos)
+            {
+                newImage.mirrorHorizontally();
+            }
+        setImage(newImage);
+        }
+        
+        xPos = getX();
+        yPos = getY();
+    }
+    
+    
     public void attack(double damage)
     {
         if(Greenfoot.isKeyDown("space"))
@@ -82,8 +116,5 @@ public class player extends Actor
             Greenfoot.delay(4);
         }
         setImage(image);
-        
-        
     }
-    
 }

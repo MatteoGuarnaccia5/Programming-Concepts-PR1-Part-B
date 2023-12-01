@@ -1,4 +1,6 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import java.util.*;
+//import java.*
 
 /**
  * Write a description of class MyWorld here.
@@ -24,21 +26,22 @@ public class MyWorld extends World
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(1000, 600, 1);
         addObject(main_player, getWidth()/3, getHeight()/3);
-        HealthBar playerHealthBar = new HealthBar();
         prepare();
+        timer timer = new timer(5);
+        addObject(timer, 500, 300);
     }
+    
     /**
      * Prepare the world for the start of the program.
      * That is: create the initial objects and add them to the world.
      */
     private void prepare()
     {
-        //Enemy enemy = new Enemy(main_player);
-        //addObject(enemy,398,182);
-        //player player = new player(30, 30);
-        //addObject(player,137,187);
         HealthBar playerHealthBar = new HealthBar();
         addObject(playerHealthBar, 55, 15);
+        long startTime = System.currentTimeMillis();
+        long endTime;
+        Boolean done = false;
     }
     public void act()
     {
@@ -47,6 +50,7 @@ public class MyWorld extends World
             spawn_enemy();
         }
     }
+        
     public void gameOver(){
             removeObjects(getObjects(Actor.class));
             GreenfootImage bg = getBackground();
