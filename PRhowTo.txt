@@ -1,0 +1,18 @@
+Structure to submit pull request. 
+
+1. In terminal git checkout develop
+2. In terminal git pull
+3. In terminal git checkout -b *name of your new branh*
+4. write your code (make sure to commit regulary)
+5. In terminal git push
+6. On github go to pull requests and compare and open PR, write a description
+7. on PR scroll down to see if it can be merged automatically (if yes skip to #15)
+8. In terminal git checkout develop
+9. In terminal git pull
+10. In terminal git checkout *name of the branch you were on*
+11. In terminal git merge develop
+12. Fix merge conflicts. Look at source control to stage changes after fixing conflicts
+13. Check everything is working in greenfoot, make any changes and remember to stage them aswell
+14. commit
+15. go on github and request a review
+16. once approved merge and delete your branch
