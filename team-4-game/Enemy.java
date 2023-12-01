@@ -37,7 +37,7 @@ public class Enemy extends Actor
     }
     public void follow()
     {
-        move(1);
+        move(2);
         turnTowards(player.getX(), player.getY());
     }
 }   
