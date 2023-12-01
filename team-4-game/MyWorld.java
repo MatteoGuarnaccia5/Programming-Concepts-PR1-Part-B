@@ -31,6 +31,8 @@ public class MyWorld extends World
         addObject(timer, 500, 300);
     }
     
+
+    
     /**
      * Prepare the world for the start of the program.
      * That is: create the initial objects and add them to the world.
@@ -45,6 +47,7 @@ public class MyWorld extends World
     }
     public void act()
     {
+        spawnHealthItem();
         count++;
         if (count < spawn_cap*spawn_speed){
             spawn_enemy();
@@ -58,7 +61,21 @@ public class MyWorld extends World
             bg.drawImage(txtImg, (bg.getWidth()-txtImg.getWidth())/2, (bg.getHeight()-txtImg.getHeight())/2);
             Greenfoot.stop(); 
     }
-    public void spawn_enemy(){
+    
+    
+public void spawnHealthItem()
+{
+        if(Greenfoot.getRandomNumber(200) == 1)
+        {
+     
+        int x = Greenfoot.getRandomNumber(1000);
+        int y = Greenfoot.getRandomNumber(600);
+     
+        addObject(new ItemHealth(), x, y);
+        }
+}
+public void spawn_enemy()
+{
         if(count % spawn_speed == 0)
         {
             random_spawn = Greenfoot.getRandomNumber(8);
