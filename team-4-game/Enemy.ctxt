@@ -9,4 +9,6 @@ comment3.params=
 comment3.target=void\ move_around()
 comment4.params=
 comment4.target=void\ follow()
-numComments=5
+comment5.params=
+comment5.target=void\ dealDamage()
+numComments=6
