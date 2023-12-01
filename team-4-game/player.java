@@ -48,6 +48,7 @@ public class player extends Actor
         move();
         attack(2.5);//actual attack damage is double the number entered. Current enemy health is 10
         animateWalking();
+        regenHealth();
     }
     
     public void move()
@@ -116,5 +117,17 @@ public class player extends Actor
             Greenfoot.delay(4);
         }
         setImage(image);
+    }
+    
+    public void regenHealth()
+    {
+        ItemHealth healthRegen = (ItemHealth) getOneIntersectingObject(ItemHealth.class);
+        if(healthRegen != null)
+        {
+            MyWorld myWorld = (MyWorld) getWorld();
+            HealthBar health = myWorld.getObjects(HealthBar.class).get(0);
+            health.health += 10;
+            getWorld().removeObject(healthRegen);
+        }
     }
 }

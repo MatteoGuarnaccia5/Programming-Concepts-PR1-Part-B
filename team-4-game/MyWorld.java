@@ -26,6 +26,11 @@ public class MyWorld extends World
         addObject(timer, 500, 300);
     }
     
+    public void act()
+    {
+        spawnHealthItem();
+    }
+    
     /**
      * Prepare the world for the start of the program.
      * That is: create the initial objects and add them to the world.
@@ -49,4 +54,16 @@ public class MyWorld extends World
             Greenfoot.stop(); 
     }
     public void spawn_enemy(){}
+    
+    public void spawnHealthItem()
+    {
+        if(Greenfoot.getRandomNumber(200) == 1)
+        {
+     
+        int x = Greenfoot.getRandomNumber(1000);
+        int y = Greenfoot.getRandomNumber(600);
+     
+        addObject(new ItemHealth(), x, y);
+}
+    }
 }
