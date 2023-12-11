@@ -12,13 +12,14 @@ public class MyWorld extends World {
     // Creates player and its healthbar
     public player main_player = new player(30, 30);
     HealthBar playerHealthBar = new HealthBar();
+    round_counter round_counter = new round_counter(1);
 
     // Spawn variables needed
     int count = 1;
     int spawn_speed = 50;
-    int spawn_cap = 11;
+    int spawn_cap = 3;
     int random_spawn;
-    int round = 9;
+    int round = 1;
     
     // Creating timers before games start and before rounds
     timer timer;
@@ -42,8 +43,7 @@ public class MyWorld extends World {
         // Displays player and healthbar
         addObject(main_player, 300, 300);
         addObject(playerHealthBar, 55, 15);
-        //enemy_2 PB = new enemy_2(main_player);
-        //addObject(PB, 300, 100);
+        addObject(round_counter, 62, 590);
     }
     
     public void act() {
@@ -60,7 +60,7 @@ public class MyWorld extends World {
             
             // If round needs to be started, variables need to be changed
             if (startRound == true) {
-                if (round == 9) {
+                if (round == 1) {
                     startRound = false;
                     spawnDone = false;
                 }
@@ -81,6 +81,7 @@ public class MyWorld extends World {
             }
             // Checks if all enemies have been killed, if so ends the round
             else {
+                // Surely need to use an OR here to remove duplicate code
                 if (round % 10 == 0) {
                     if (getObjects(enemy_2.class).size() == 0) {
                         incrementStats();
@@ -97,6 +98,7 @@ public class MyWorld extends World {
                         startRound = true;
                     }
                 }
+                round_counter.update_round(round);
             }
         }
     }
