@@ -16,9 +16,9 @@ public class MyWorld extends World {
     // Spawn variables needed
     int count = 1;
     int spawn_speed = 50;
-    int spawn_cap = 6;
+    int spawn_cap = 11;
     int random_spawn;
-    int round = 1;
+    int round = 9;
     
     // Creating timers before games start and before rounds
     timer timer;
@@ -42,6 +42,8 @@ public class MyWorld extends World {
         // Displays player and healthbar
         addObject(main_player, 300, 300);
         addObject(playerHealthBar, 55, 15);
+        //enemy_2 PB = new enemy_2(main_player);
+        //addObject(PB, 300, 100);
     }
     
     public void act() {
@@ -58,7 +60,7 @@ public class MyWorld extends World {
             
             // If round needs to be started, variables need to be changed
             if (startRound == true) {
-                if (round == 1) {
+                if (round == 9) {
                     startRound = false;
                     spawnDone = false;
                 }
@@ -70,15 +72,31 @@ public class MyWorld extends World {
             
             // Spawns enemies if needed
             else if (spawnDone == false) {
-                doRound();
+                if (round % 10 == 0) {
+                    specialRound();
+                }
+                else {
+                    doRound();
+                }
             }
-            
             // Checks if all enemies have been killed, if so ends the round
-            else if (getObjects(Enemy.class).size() == 0) {
-                incrementStats();
-                beforeRoundTimer = new BeforeRoundTimer(5, round);
-                addObject(beforeRoundTimer, 500, 300);
-                startRound = true;
+            else {
+                if (round % 10 == 0) {
+                    if (getObjects(enemy_2.class).size() == 0) {
+                        incrementStats();
+                        beforeRoundTimer = new BeforeRoundTimer(5, round);
+                        addObject(beforeRoundTimer, 500, 300);
+                        startRound = true;
+                    }
+                }
+                else {
+                    if (getObjects(Enemy.class).size() == 0) {
+                        incrementStats();
+                        beforeRoundTimer = new BeforeRoundTimer(5, round);
+                        addObject(beforeRoundTimer, 500, 300);
+                        startRound = true;
+                    }
+                }
             }
         }
     }
@@ -87,8 +105,28 @@ public class MyWorld extends World {
         // Changes the spawn variables as round has been completed
         round += 1;                
         count = 1;
-        spawn_cap += 1;
         spawn_speed += 1;
+        if (round % 10 == 0) {
+            spawn_cap += 1;
+            spawn_cap = (spawn_cap / 2) - 3;
+        } else if (round % 10 == 1) {
+            spawn_cap = 3 + (spawn_cap * 2);
+            spawn_cap += 1;
+        } else {
+            spawn_cap += 1;
+        }
+
+    }
+    
+    public void specialRound() {
+        spawnHealthItem();
+        
+        if (count <= spawn_cap * spawn_speed) {
+            spawn_enemy_2();
+            count++;
+        } else {
+            spawnDone = true;
+        }
     }
     
     public void doRound() {
@@ -141,4 +179,22 @@ public class MyWorld extends World {
             }
         }
     }
+    
+    public void spawn_enemy_2() {
+        // Checks if enemy needs to be spawned, enemy spawns in random location
+        if(count % spawn_speed == 0) {
+            random_spawn = Greenfoot.getRandomNumber(8);
+            switch(random_spawn){
+                case 0 : addObject(new enemy_2(main_player), 0, 0); break;
+                case 1 : addObject(new enemy_2(main_player), getWidth()/2, 0); break;
+                case 2 : addObject(new enemy_2(main_player), getWidth(), 0); break;
+                case 3 : addObject(new enemy_2(main_player), getWidth(), getHeight()/2); break;
+                case 4 : addObject(new enemy_2(main_player), getWidth(), getHeight() ); break;
+                case 5 : addObject(new enemy_2(main_player), getWidth()/2, getHeight()); break;
+                case 6 : addObject(new enemy_2(main_player), 0, getHeight()); break;
+                case 7 : addObject(new enemy_2(main_player), 0, getHeight()/2); break;
+            }
+        }
+    }
+
 }
