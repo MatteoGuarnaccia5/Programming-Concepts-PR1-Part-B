@@ -1,22 +1,21 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * A timer used between rounds, to ready the user before the next
+ * A timer used during the round, to indicate the amount of time left
  * 
  * @author Matteo Guarnaccia, William Brown, Yufan Kambang
- * @version 02/12/2023
+ * @version 12/12/2023
  */
-public class BeforeRoundTimer extends Actor {
+
+public class DuringRoundTimer extends Actor {
     // Variables used in the timer
     int seconds;
     int timer;
-    int round;
     Boolean complete = false;
     
-    public BeforeRoundTimer(int seconds, int round) {
+    public DuringRoundTimer(int seconds) {
         // Constructor translating arguments into atributes
         this.seconds = seconds;
-        this.round = round;
         timer = 55 * seconds;
     }
 
@@ -24,7 +23,7 @@ public class BeforeRoundTimer extends Actor {
         // Checks if timer is exactly on a second of time, if it does displays different image
         timer--;
         if (timer % 55 == 0) {
-            updateImage(round);
+            updateImage();
         }
         
         // Checks if timer has finished
@@ -39,8 +38,8 @@ public class BeforeRoundTimer extends Actor {
         return this.complete;
     }
     
-    public void updateImage(int round) {
+    public void updateImage() {
         // Updates the image when a second has passed
-        setImage(new GreenfootImage("Time Before Round "+round+": "+timer/55, 50, Color.BLACK, Color.WHITE));
+        setImage(new GreenfootImage("Time Left: "+timer/55, 20, Color.BLACK, Color.WHITE));
     }
 }

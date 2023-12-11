@@ -3,7 +3,7 @@ import java.util.*;
 //import java.*
 
 /**
- * The world in which the game is set. Spawns utems, healthbar, a player and enemies and what happens when game is finished.
+ * The world in which the game is set. Spawns items, healthbar, a player and enemies and what happens when game is finished.
  * 
  * @author Matteo Guarnaccia, William Brown, Yufan Kambang
  * @version 02/12/2023
@@ -24,6 +24,7 @@ public class MyWorld extends World {
     // Creating timers before games start and before rounds
     timer timer;
     BeforeRoundTimer beforeRoundTimer;
+    DuringRoundTimer duringRoundTimer;
     
     // Variables to identify what to do during act method
     Boolean startGame = false;
@@ -68,6 +69,8 @@ public class MyWorld extends World {
                     startRound = false;
                     spawnDone = false;
                 }
+                duringRoundTimer = new DuringRoundTimer(60);
+                addObject(duringRoundTimer, 953, 590);
             }
             
             // Spawns enemies if needed
@@ -89,6 +92,9 @@ public class MyWorld extends World {
                         addObject(beforeRoundTimer, 500, 300);
                         startRound = true;
                     }
+                    else if (duringRoundTimer.checkDone() == true) {
+                        gameOver();
+                    }
                 }
                 else {
                     if (getObjects(Enemy.class).size() == 0) {
@@ -96,6 +102,10 @@ public class MyWorld extends World {
                         beforeRoundTimer = new BeforeRoundTimer(5, round);
                         addObject(beforeRoundTimer, 500, 300);
                         startRound = true;
+                        removeObjects(getObjects(DuringRoundTimer.class));
+                    }
+                    else if (duringRoundTimer.checkDone() == true) {
+                        gameOver();
                     }
                 }
                 round_counter.update_round(round);
@@ -117,7 +127,6 @@ public class MyWorld extends World {
         } else {
             spawn_cap += 1;
         }
-
     }
     
     public void specialRound() {
@@ -198,5 +207,4 @@ public class MyWorld extends World {
             }
         }
     }
-
 }
