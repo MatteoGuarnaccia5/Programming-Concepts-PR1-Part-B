@@ -112,12 +112,15 @@ public class player extends Actor {
         {
             setImage(attackImage);
             Enemy enemy = (Enemy) getOneIntersectingObject(Enemy.class);
-            if(enemy != null)
-            {
-                enemy.health -=damage;
-                
+            if(enemy != null) {
+                enemy.health -= damage;                
             }
             Greenfoot.delay(4);
+            
+            enemy_2 enemy_2 = (enemy_2) getOneIntersectingObject(enemy_2.class);
+            if (enemy_2 != null) {
+                enemy_2.health -= damage;
+            }
         }
         setImage(image);
     }

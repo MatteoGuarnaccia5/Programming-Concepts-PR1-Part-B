@@ -1,0 +1,12 @@
+#BlueJ class context
+comment0.target=enemy_2
+comment0.text=\r\n\ An\ enemy\ (polar\ bear)\ which\ attacks\ the\ player.\r\n\ \r\n\ @author\ Matteo\ Guarnaccia,\ William\ Brown,\ Yufan\ Kambang\r\n\ @version\ 02/12/2023\r\n
+comment1.params=main_player
+comment1.target=enemy_2(player)
+comment2.params=
+comment2.target=void\ act()
+comment3.params=
+comment3.target=void\ follow()
+comment4.params=
+comment4.target=void\ dealDamage()
+numComments=5

@@ -1,0 +1,12 @@
+#BlueJ class context
+comment0.target=DuringRoundTimer
+comment0.text=\r\n\ A\ timer\ used\ during\ the\ round,\ to\ indicate\ the\ amount\ of\ time\ left\r\n\ \r\n\ @author\ Matteo\ Guarnaccia,\ William\ Brown,\ Yufan\ Kambang\r\n\ @version\ 12/12/2023\r\n
+comment1.params=seconds
+comment1.target=DuringRoundTimer(int)
+comment2.params=
+comment2.target=void\ act()
+comment3.params=
+comment3.target=java.lang.Boolean\ checkDone()
+comment4.params=
+comment4.target=void\ updateImage()
+numComments=5
