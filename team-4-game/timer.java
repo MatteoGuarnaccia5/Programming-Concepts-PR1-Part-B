@@ -1,11 +1,5 @@
-import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import greenfoot.*;
 
-/**
- * A timer which can be used before a game begins
- * 
- * @author Matteo Guarnaccia, William Brown, Yufan Kambang
- * @version 02/12/2023
- */
 public class timer extends Actor {
     // Variables for timer to function
     int seconds;

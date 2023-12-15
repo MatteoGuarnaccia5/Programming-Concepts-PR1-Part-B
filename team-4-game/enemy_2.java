@@ -1,12 +1,6 @@
-import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import greenfoot.*;
 import java.util.*;
 
-/**
- * An enemy (polar bear) which attacks the player.
- * 
- * @author Matteo Guarnaccia, William Brown, Yufan Kambang
- * @version 02/12/2023
- */
 public class enemy_2 extends Actor {
     // Variables for the enemy 
     int health = 30;
@@ -17,8 +11,7 @@ public class enemy_2 extends Actor {
     public GreenfootImage playerDamageImage = new GreenfootImage("penguin-take-damage.png");
     player player; 
 
-    public enemy_2(player main_player)
-    {
+    public enemy_2(player main_player) {
         // Scales the images of the enemy
         enemyImage.scale(40,40);
         playerDamageImage.scale(35,50);
@@ -27,8 +20,7 @@ public class enemy_2 extends Actor {
         long now = new Date().getTime();
     }
 
-    public void act()
-    {
+    public void act() {
         // Instructs enemy to follow the player
         follow();
         long now2 = new Date().getTime();
@@ -56,8 +48,7 @@ public class enemy_2 extends Actor {
     public void dealDamage(){
         // Checks if the player is near an enemy, and hence whether damage should be dealt
         player player2 = (player) getOneIntersectingObject(player.class);
-        if(getOneObjectAtOffset(0, 0, player.class) != null)
-        {
+        if(getOneObjectAtOffset(0, 0, player.class) != null) {
             //add animation at a later date
             currentlyDamaging = true;
             MyWorld myWorld = (MyWorld) getWorld();

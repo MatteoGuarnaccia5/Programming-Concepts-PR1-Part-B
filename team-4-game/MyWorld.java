@@ -1,13 +1,6 @@
-import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import greenfoot.*;
 import java.util.*;
-//import java.*
 
-/**
- * The world in which the game is set. Spawns items, healthbar, a player and enemies and what happens when game is finished.
- * 
- * @author Matteo Guarnaccia, William Brown, Yufan Kambang
- * @version 02/12/2023
- */
 public class MyWorld extends World {
     // Creates player and its healthbar
     public player main_player = new player(30, 30);
@@ -28,31 +21,31 @@ public class MyWorld extends World {
     // Initialising variables for enemies to spawn
     Enemy enemy;
     enemy_2 enemy_2;
-    
-    GreenfootImage background;
-    
+       
     // Creating timers before games start and before rounds
     timer timer;
     BeforeRoundTimer beforeRoundTimer;
     DuringRoundTimer duringRoundTimer;
+    intro intro;
     
     // Variables to identify what to do during act method
     Boolean startGame = false;
     Boolean startRound = false;
     Boolean spawnDone = false;
     int weaponCounter = 0;
+    
     public MyWorld() {    
         // Creates an area for the game
         super(1000, 600, 1);
-        
-        // Creating and displaying timer for game start
-        timer = new timer(5);
-        addObject(timer, 500, 300);
+
+        // Create and show the intro screen
+        intro = new intro();
+        addObject(intro, 500, 300);
     }
     
     public void createPlayer() {
         // Displays player and healthbar
-        addObject(main_player, 300, 300);
+        addObject(main_player, 500, 300);
         addObject(playerHealthBar, 55, 15);
         addObject(round_counter, 62, 590);
     }
@@ -60,25 +53,33 @@ public class MyWorld extends World {
     public void act() {
         // Checks if game has been started, and if timer has finished
         if (startGame == false) {
-            if (timer.checkDone() == true) {
-                createPlayer();
-                startGame = true;
-                startRound = true;
+            if (intro.isDone == true) {
+                // Removes intro if user presses the enter key
+                removeObjects(getObjects(intro.class));
+                
+                if (timer == null) {
+                    timer = new timer(5);
+                    addObject(timer, 500, 300);
+                }
+                
+                if (timer.checkDone() == true) {
+                    // Begin the game
+                    createPlayer();
+                    startGame = true;
+                    startRound = true;
+                }
             }
-        
+
         // Otherwise, checks if game has not yet been started
         } else {
-            
             // If round needs to be started, variables need to be changed
             if (startRound == true) {
-                if (round == 1) {
+                if ((round == 1) || (beforeRoundTimer.checkDone())) {
                     startRound = false;
                     spawnDone = false;
                 }
-                else if (beforeRoundTimer.checkDone() == true) {
-                    startRound = false;
-                    spawnDone = false;
-                }
+                
+                // Add the timer to display during the round
                 duringRoundTimer = new DuringRoundTimer(60 + round);
                 addObject(duringRoundTimer, 953, 590);
             }
@@ -94,16 +95,19 @@ public class MyWorld extends World {
             }
             // Checks if all enemies have been killed, if so ends the round
             else {
-                // Surely need to use an OR here to remove duplicate code
+                // If it is a special polar bear round, check if all enemies have been killed
                 if (round % 5 == 0) {
                     if (getObjects(enemy_2.class).size() == 0) {
-                        incrementStatsPb();
+                        // Change game variables, add timer for next round
+                        incrementStats(true);
                         beforeRoundTimer = new BeforeRoundTimer(5, round);
                         addObject(beforeRoundTimer, 500, 300);
                         
                         // Ensures the player and health items appear over the timer
                         setPaintOrder(player.class, ItemHealth.class, BeforeRoundTimer.class);
                         startRound = true;
+                        
+                        // Remove the timer and the label showing it is a polar bear round
                         removeObjects(getObjects(DuringRoundTimer.class));
                         removeObjects(getObjects(pb_label.class));
                     }
@@ -113,7 +117,8 @@ public class MyWorld extends World {
                 }
                 else {
                     if (getObjects(Enemy.class).size() == 0) {
-                        incrementStats();
+                        // Change game variables, add timer for next round
+                        incrementStats(false);
                         beforeRoundTimer = new BeforeRoundTimer(5, round);
                         addObject(beforeRoundTimer, 500, 300);
                         
@@ -121,8 +126,9 @@ public class MyWorld extends World {
                         setPaintOrder(player.class, ItemHealth.class, BeforeRoundTimer.class);
                         startRound = true;
                         removeObjects(getObjects(DuringRoundTimer.class));
+                        
+                        // Add a label to show that it is a polar bear level
                         if (round % 5 == 0) {
-                            background = getBackground();
                             pb_label = new pb_label();
                             addObject(pb_label, 500, 10);
                         }
@@ -136,22 +142,20 @@ public class MyWorld extends World {
         }
     }
     
-    public void incrementStats() {
+    public void incrementStats(Boolean polar_bear) {
         // Changes the spawn variables as round has been completed
         round += 1;                
         count = 1;
-        spawn_cap += 1;
-    }
-    
-    public void incrementStatsPb() {
-        // Changes spawn variable after a special polar bear round!
-        round += 1;
-        count = 1;
-        spawn_cap_pb += 1;
-    }
-    
-    public void specialRound() {
         
+        if (polar_bear == true) {
+            spawn_cap_pb += 1;
+        }
+        else {
+            spawn_cap += 1;
+        }
+    }
+        
+    public void specialRound() {
         // Increases liklihood of a health item spawning
         for (int i = 0; i < 4; i++) {
             spawnHealthItem();
@@ -170,15 +174,15 @@ public class MyWorld extends World {
         // Spawns items
         spawnHealthItem();
         spawnWeaponItem();
+        
         // Checks if enough enemies have been spawned, if not then spawns enemy
-        if (count <= spawn_cap * spawn_speed){
+        if (count <= spawn_cap * spawn_speed) {
             spawn_enemy();
             count++;
         }
         else {
             spawnDone = true;
         }
-        
     }
     
     public void gameOver(){
@@ -202,7 +206,7 @@ public class MyWorld extends World {
     }
     
     public void spawnWeaponItem(){
-        //Randomly spawns in a weapon item
+        // Randomly spawns in a weapon item
         if(Greenfoot.getRandomNumber(200) == 1 && weaponCounter == 0){
             int x = Greenfoot.getRandomNumber(1000);
             int y = Greenfoot.getRandomNumber(600);
@@ -216,7 +220,7 @@ public class MyWorld extends World {
         if(count % spawn_speed == 0) {
             random_spawn = Greenfoot.getRandomNumber(8);
             enemy = new Enemy(main_player);
-            switch(random_spawn){
+            switch(random_spawn) {
                 case 0 : addObject(enemy, 0, 0); break;
                 case 1 : addObject(enemy, getWidth()/2, 0); break;
                 case 2 : addObject(enemy, getWidth(), 0); break;

@@ -1,11 +1,4 @@
-import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
-
-/**
- * A timer used during the round, to indicate the amount of time left
- * 
- * @author Matteo Guarnaccia, William Brown, Yufan Kambang
- * @version 12/12/2023
- */
+import greenfoot.*;
 
 public class DuringRoundTimer extends Actor {
     // Variables used in the timer
