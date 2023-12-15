@@ -13,13 +13,23 @@ public class MyWorld extends World {
     public player main_player = new player(30, 30);
     HealthBar playerHealthBar = new HealthBar();
     round_counter round_counter = new round_counter(1);
+    pb_label pb_label;
 
     // Spawn variables needed
     int count = 1;
-    int spawn_speed = 50;
+    int round = 1;
+
+    final int spawn_speed = 50;
     int spawn_cap = 3;
     int random_spawn;
-    int round = 1;
+
+    int spawn_cap_pb = 1;
+    
+    // Initialising variables for enemies to spawn
+    Enemy enemy;
+    enemy_2 enemy_2;
+    
+    GreenfootImage background;
     
     // Creating timers before games start and before rounds
     timer timer;
@@ -69,13 +79,13 @@ public class MyWorld extends World {
                     startRound = false;
                     spawnDone = false;
                 }
-                duringRoundTimer = new DuringRoundTimer(60);
+                duringRoundTimer = new DuringRoundTimer(60 + round);
                 addObject(duringRoundTimer, 953, 590);
             }
             
             // Spawns enemies if needed
             else if (spawnDone == false) {
-                if (round % 10 == 0) {
+                if (round % 5 == 0) {
                     specialRound();
                 }
                 else {
@@ -85,12 +95,17 @@ public class MyWorld extends World {
             // Checks if all enemies have been killed, if so ends the round
             else {
                 // Surely need to use an OR here to remove duplicate code
-                if (round % 10 == 0) {
+                if (round % 5 == 0) {
                     if (getObjects(enemy_2.class).size() == 0) {
-                        incrementStats();
+                        incrementStatsPb();
                         beforeRoundTimer = new BeforeRoundTimer(5, round);
                         addObject(beforeRoundTimer, 500, 300);
+                        
+                        // Ensures the player and health items appear over the timer
+                        setPaintOrder(player.class, ItemHealth.class, BeforeRoundTimer.class);
                         startRound = true;
+                        removeObjects(getObjects(DuringRoundTimer.class));
+                        removeObjects(getObjects(pb_label.class));
                     }
                     else if (duringRoundTimer.checkDone() == true) {
                         gameOver();
@@ -101,8 +116,16 @@ public class MyWorld extends World {
                         incrementStats();
                         beforeRoundTimer = new BeforeRoundTimer(5, round);
                         addObject(beforeRoundTimer, 500, 300);
+                        
+                        // Ensures the player and health items appear over the timer
+                        setPaintOrder(player.class, ItemHealth.class, BeforeRoundTimer.class);
                         startRound = true;
                         removeObjects(getObjects(DuringRoundTimer.class));
+                        if (round % 5 == 0) {
+                            background = getBackground();
+                            pb_label = new pb_label();
+                            addObject(pb_label, 500, 10);
+                        }
                     }
                     else if (duringRoundTimer.checkDone() == true) {
                         gameOver();
@@ -117,22 +140,25 @@ public class MyWorld extends World {
         // Changes the spawn variables as round has been completed
         round += 1;                
         count = 1;
-        spawn_speed += 1;
-        if (round % 10 == 0) {
-            spawn_cap += 1;
-            spawn_cap = (spawn_cap / 2) - 3;
-        } else if (round % 10 == 1) {
-            spawn_cap = 3 + (spawn_cap * 2);
-            spawn_cap += 1;
-        } else {
-            spawn_cap += 1;
-        }
+        spawn_cap += 1;
+    }
+    
+    public void incrementStatsPb() {
+        // Changes spawn variable after a special polar bear round!
+        round += 1;
+        count = 1;
+        spawn_cap_pb += 1;
     }
     
     public void specialRound() {
-        spawnHealthItem();
         
-        if (count <= spawn_cap * spawn_speed) {
+        // Increases liklihood of a health item spawning
+        for (int i = 0; i < 4; i++) {
+            spawnHealthItem();
+        }
+        
+        // Spawns enemy if there hasn't been enough spawned yet
+        if (count <= spawn_cap_pb * spawn_speed) {
             spawn_enemy_2();
             count++;
         } else {
@@ -189,15 +215,16 @@ public class MyWorld extends World {
         // Checks if enemy needs to be spawned, enemy spawns in random location
         if(count % spawn_speed == 0) {
             random_spawn = Greenfoot.getRandomNumber(8);
+            enemy = new Enemy(main_player);
             switch(random_spawn){
-                case 0 : addObject(new Enemy(main_player), 0, 0); break;
-                case 1 : addObject(new Enemy(main_player), getWidth()/2, 0); break;
-                case 2 : addObject(new Enemy(main_player), getWidth(), 0); break;
-                case 3 : addObject(new Enemy(main_player), getWidth(), getHeight()/2); break;
-                case 4 : addObject(new Enemy(main_player), getWidth(), getHeight() ); break;
-                case 5 : addObject(new Enemy(main_player), getWidth()/2, getHeight()); break;
-                case 6 : addObject(new Enemy(main_player), 0, getHeight()); break;
-                case 7 : addObject(new Enemy(main_player), 0, getHeight()/2); break;
+                case 0 : addObject(enemy, 0, 0); break;
+                case 1 : addObject(enemy, getWidth()/2, 0); break;
+                case 2 : addObject(enemy, getWidth(), 0); break;
+                case 3 : addObject(enemy, getWidth(), getHeight()/2); break;
+                case 4 : addObject(enemy, getWidth(), getHeight() ); break;
+                case 5 : addObject(enemy, getWidth()/2, getHeight()); break;
+                case 6 : addObject(enemy, 0, getHeight()); break;
+                case 7 : addObject(enemy, 0, getHeight()/2); break;
             }
         }
     }
@@ -206,15 +233,16 @@ public class MyWorld extends World {
         // Checks if enemy needs to be spawned, enemy spawns in random location
         if(count % spawn_speed == 0) {
             random_spawn = Greenfoot.getRandomNumber(8);
+            enemy_2 = new enemy_2(main_player);
             switch(random_spawn){
-                case 0 : addObject(new enemy_2(main_player), 0, 0); break;
-                case 1 : addObject(new enemy_2(main_player), getWidth()/2, 0); break;
-                case 2 : addObject(new enemy_2(main_player), getWidth(), 0); break;
-                case 3 : addObject(new enemy_2(main_player), getWidth(), getHeight()/2); break;
-                case 4 : addObject(new enemy_2(main_player), getWidth(), getHeight() ); break;
-                case 5 : addObject(new enemy_2(main_player), getWidth()/2, getHeight()); break;
-                case 6 : addObject(new enemy_2(main_player), 0, getHeight()); break;
-                case 7 : addObject(new enemy_2(main_player), 0, getHeight()/2); break;
+                case 0 : addObject(enemy_2, 0, 0); break;
+                case 1 : addObject(enemy_2, getWidth()/2, 0); break;
+                case 2 : addObject(enemy_2, getWidth(), 0); break;
+                case 3 : addObject(enemy_2, getWidth(), getHeight()/2); break;
+                case 4 : addObject(enemy_2, getWidth(), getHeight() ); break;
+                case 5 : addObject(enemy_2, getWidth()/2, getHeight()); break;
+                case 6 : addObject(enemy_2, 0, getHeight()); break;
+                case 7 : addObject(enemy_2, 0, getHeight()/2); break;
             }
         }
     }

@@ -9,7 +9,7 @@ import java.util.*;
  */
 public class enemy_2 extends Actor {
     // Variables for the enemy 
-    int health = 25;
+    int health = 30;
     public boolean currentlyDamaging; 
     long now;
     long now2;
