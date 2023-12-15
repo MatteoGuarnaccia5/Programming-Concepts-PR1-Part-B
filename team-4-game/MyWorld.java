@@ -168,7 +168,7 @@ public class MyWorld extends World {
     
     public void spawnHealthItem() {
         // Randomly spawns in a health item
-        if(Greenfoot.getRandomNumber(200) == 1) {
+        if(Greenfoot.getRandomNumber(150) == 1) {
             int x = Greenfoot.getRandomNumber(1000);
             int y = Greenfoot.getRandomNumber(600);
             addObject(new ItemHealth(), x, y);
@@ -177,7 +177,7 @@ public class MyWorld extends World {
     
     public void spawnWeaponItem(){
         //Randomly spawns in a weapon item
-        if(Greenfoot.getRandomNumber(300) == 1 && weaponCounter == 0){
+        if(Greenfoot.getRandomNumber(200) == 1 && weaponCounter == 0){
             int x = Greenfoot.getRandomNumber(1000);
             int y = Greenfoot.getRandomNumber(600);
             addObject(new ItemWeapon(), x, y);
