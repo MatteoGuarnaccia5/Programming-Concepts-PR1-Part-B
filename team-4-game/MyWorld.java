@@ -75,7 +75,7 @@ public class MyWorld extends World {
                     startRound = false;
                     spawnDone = false;
                 }
-                duringRoundTimer = new DuringRoundTimer(60);
+                duringRoundTimer = new DuringRoundTimer(60 + round);
                 addObject(duringRoundTimer, 953, 590);
             }
             
@@ -96,7 +96,9 @@ public class MyWorld extends World {
                         incrementStatsPb();
                         beforeRoundTimer = new BeforeRoundTimer(5, round);
                         addObject(beforeRoundTimer, 500, 300);
+                        setPaintOrder(player.class, ItemHealth.class, BeforeRoundTimer.class);
                         startRound = true;
+                        removeObjects(getObjects(DuringRoundTimer.class));
                     }
                     else if (duringRoundTimer.checkDone() == true) {
                         gameOver();
@@ -107,6 +109,7 @@ public class MyWorld extends World {
                         incrementStats();
                         beforeRoundTimer = new BeforeRoundTimer(5, round);
                         addObject(beforeRoundTimer, 500, 300);
+                        setPaintOrder(player.class, ItemHealth.class, BeforeRoundTimer.class);
                         startRound = true;
                         removeObjects(getObjects(DuringRoundTimer.class));
                     }
