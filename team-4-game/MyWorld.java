@@ -45,8 +45,8 @@ public class MyWorld extends World {
     public MyWorld() {    
         // Creates an area for the game
         super(1000, 600, 1);
-        backgroundMusic.setVolume(20);
-        //backgroundMusic.playLoop();
+        backgroundMusic.setVolume(10);
+        backgroundMusic.playLoop();
         
         // Creating and displaying timer for game start
         timer = new timer(5);
