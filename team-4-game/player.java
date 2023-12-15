@@ -11,6 +11,8 @@ public class player extends Actor {
     private int playerHealth = 100;
     private int playerShield = 0;
     public int frame = 1;
+    private boolean hasWeapon = false;
+    private int shotsLeft = 0;
     
     // Images for the penguin
     public GreenfootImage attackImage = new GreenfootImage("penguin-attackV2.png");
@@ -22,6 +24,7 @@ public class player extends Actor {
     Integer width;
     Integer height;
     Integer speed = 3;
+    public int bulletSpeed;
     
     // Keeping track of the player position
     int xPos;
@@ -50,6 +53,8 @@ public class player extends Actor {
         attack(2.5);
         animateWalking();
         regenHealth();
+        collectWeapon();
+        shoot();
     }
     
     public void move() {
@@ -72,11 +77,13 @@ public class player extends Actor {
         if (Greenfoot.isKeyDown("right") && !isAtEdge())
         {
             x += speed;
+            bulletSpeed = 4;
         }
         
         if (Greenfoot.isKeyDown("left") && x > speed)
         {
             x -= speed;
+            bulletSpeed = -4;
         }
         setLocation(x, y);
     }
@@ -115,12 +122,13 @@ public class player extends Actor {
             if(enemy != null) {
                 enemy.health -= damage;                
             }
-            Greenfoot.delay(4);
+            
             
             enemy_2 enemy_2 = (enemy_2) getOneIntersectingObject(enemy_2.class);
             if (enemy_2 != null) {
                 enemy_2.health -= damage;
             }
+            Greenfoot.delay(4);
         }
         setImage(image);
     }
@@ -134,6 +142,31 @@ public class player extends Actor {
             HealthBar health = myWorld.getObjects(HealthBar.class).get(0);
             health.health += 10;
             getWorld().removeObject(healthRegen);
+        }
+    }
+    
+    public void collectWeapon() {
+        //sets players ability to 'shoot' to be true if collects the weapon item
+        ItemWeapon weapon = (ItemWeapon) getOneIntersectingObject(ItemWeapon.class);
+        if(weapon != null){
+            getWorld().removeObject(weapon);
+            hasWeapon = true;
+            shotsLeft = 30;
+        }
+    }
+    
+    public void shoot() {
+        if(hasWeapon && "q".equals(Greenfoot.getKey())){
+            shotsLeft -= 1;
+            Bullet bullet = new Bullet(bulletSpeed);
+            getWorld().addObject(bullet, getX(), getY());
+            bullet.move(bulletSpeed * 5);
+            
+            if(shotsLeft == 0){
+            hasWeapon = false;
+            MyWorld myWorld = (MyWorld) getWorld();
+            myWorld.weaponCounter = 0;
+        }
         }
     }
 }
