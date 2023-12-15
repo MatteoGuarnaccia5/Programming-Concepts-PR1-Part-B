@@ -16,6 +16,9 @@ public class Enemy extends Actor {
     public GreenfootImage enemyImage = getImage();
     public GreenfootImage playerDamageImage = new GreenfootImage("penguin-take-damage.png");
     player player; 
+    
+    public GreenfootSound damageSound = new GreenfootSound("take-damage.mp3");
+    public GreenfootSound deathSound = new GreenfootSound("enemy-death.mp3");
 
     public Enemy(player main_player)
     {
@@ -41,6 +44,7 @@ public class Enemy extends Actor {
         
         // Checks if enemy has no health left
         if(health <=0){
+            deathSound.play();
             getWorld().removeObject(this);
         }
 
@@ -58,8 +62,8 @@ public class Enemy extends Actor {
         player player2 = (player) getOneIntersectingObject(player.class);
         if(getOneObjectAtOffset(0, 0, player.class) != null)
         {
-            //add animation at a later date
             currentlyDamaging = true;
+            damageSound.play();
             MyWorld myWorld = (MyWorld) getWorld();
             HealthBar health = myWorld.getObjects(HealthBar.class).get(0);
             health.hitByEnemy();
