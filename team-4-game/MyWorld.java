@@ -30,7 +30,7 @@ public class MyWorld extends World {
     Boolean startGame = false;
     Boolean startRound = false;
     Boolean spawnDone = false;
-    
+    int weaponCounter = 0;
     public MyWorld() {    
         // Creates an area for the game
         super(1000, 600, 1);
@@ -143,7 +143,7 @@ public class MyWorld extends World {
     public void doRound() {
         // Spawns items
         spawnHealthItem();
-        
+        spawnWeaponItem();
         // Checks if enough enemies have been spawned, if not then spawns enemy
         if (count <= spawn_cap * spawn_speed){
             spawn_enemy();
@@ -152,6 +152,7 @@ public class MyWorld extends World {
         else {
             spawnDone = true;
         }
+        
     }
     
     public void gameOver(){
@@ -171,6 +172,16 @@ public class MyWorld extends World {
             int x = Greenfoot.getRandomNumber(1000);
             int y = Greenfoot.getRandomNumber(600);
             addObject(new ItemHealth(), x, y);
+        }
+    }
+    
+    public void spawnWeaponItem(){
+        //Randomly spawns in a weapon item
+        if(Greenfoot.getRandomNumber(300) == 1 && weaponCounter == 0){
+            int x = Greenfoot.getRandomNumber(1000);
+            int y = Greenfoot.getRandomNumber(600);
+            addObject(new ItemWeapon(), x, y);
+            weaponCounter = 1;
         }
     }
     
