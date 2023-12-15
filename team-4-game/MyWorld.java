@@ -13,6 +13,7 @@ public class MyWorld extends World {
     public player main_player = new player(30, 30);
     HealthBar playerHealthBar = new HealthBar();
     round_counter round_counter = new round_counter(1);
+    pb_label pb_label;
 
     // Spawn variables needed
     int count = 1;
@@ -24,8 +25,11 @@ public class MyWorld extends World {
 
     int spawn_cap_pb = 1;
     
+    // Initialising variables for enemies to spawn
     Enemy enemy;
     enemy_2 enemy_2;
+    
+    GreenfootImage background;
     
     // Creating timers before games start and before rounds
     timer timer;
@@ -96,9 +100,12 @@ public class MyWorld extends World {
                         incrementStatsPb();
                         beforeRoundTimer = new BeforeRoundTimer(5, round);
                         addObject(beforeRoundTimer, 500, 300);
+                        
+                        // Ensures the player and health items appear over the timer
                         setPaintOrder(player.class, ItemHealth.class, BeforeRoundTimer.class);
                         startRound = true;
                         removeObjects(getObjects(DuringRoundTimer.class));
+                        removeObjects(getObjects(pb_label.class));
                     }
                     else if (duringRoundTimer.checkDone() == true) {
                         gameOver();
@@ -109,9 +116,16 @@ public class MyWorld extends World {
                         incrementStats();
                         beforeRoundTimer = new BeforeRoundTimer(5, round);
                         addObject(beforeRoundTimer, 500, 300);
+                        
+                        // Ensures the player and health items appear over the timer
                         setPaintOrder(player.class, ItemHealth.class, BeforeRoundTimer.class);
                         startRound = true;
                         removeObjects(getObjects(DuringRoundTimer.class));
+                        if (round % 5 == 0) {
+                            background = getBackground();
+                            pb_label = new pb_label();
+                            addObject(pb_label, 500, 10);
+                        }
                     }
                     else if (duringRoundTimer.checkDone() == true) {
                         gameOver();
@@ -130,6 +144,7 @@ public class MyWorld extends World {
     }
     
     public void incrementStatsPb() {
+        // Changes spawn variable after a special polar bear round!
         round += 1;
         count = 1;
         spawn_cap_pb += 1;
@@ -137,10 +152,12 @@ public class MyWorld extends World {
     
     public void specialRound() {
         
+        // Increases liklihood of a health item spawning
         for (int i = 0; i < 4; i++) {
             spawnHealthItem();
         }
         
+        // Spawns enemy if there hasn't been enough spawned yet
         if (count <= spawn_cap_pb * spawn_speed) {
             spawn_enemy_2();
             count++;
