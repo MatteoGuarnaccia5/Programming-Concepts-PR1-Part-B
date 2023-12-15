@@ -21,6 +21,10 @@ public class MyWorld extends World {
     // Initialising variables for enemies to spawn
     Enemy enemy;
     enemy_2 enemy_2;
+    
+    GreenfootImage background;
+    GreenfootSound backgroundMusic = new GreenfootSound("background-music.mp3");
+    GreenfootSound gameOverSound = new GreenfootSound("game-over.mp3");
        
     // Creating timers before games start and before rounds
     timer timer;
@@ -37,7 +41,9 @@ public class MyWorld extends World {
     public MyWorld() {    
         // Creates an area for the game
         super(1000, 600, 1);
-
+        backgroundMusic.setVolume(10);
+        backgroundMusic.playLoop();
+        
         // Create and show the intro screen
         intro = new intro();
         addObject(intro, 500, 300);
@@ -51,6 +57,7 @@ public class MyWorld extends World {
     }
     
     public void act() {
+        
         // Checks if game has been started, and if timer has finished
         if (startGame == false) {
             if (intro.isDone == true) {
@@ -187,6 +194,8 @@ public class MyWorld extends World {
     
     public void gameOver(){
         // Called once healthbar is 0, dispays game over screen and how many rounds the user completed
+        backgroundMusic.stop();
+        gameOverSound.play();
         removeObjects(getObjects(Actor.class));
         GreenfootImage bg = getBackground();
         GreenfootImage txtImg = new GreenfootImage("GAME OVER", 80, Color.WHITE, Color.BLACK);

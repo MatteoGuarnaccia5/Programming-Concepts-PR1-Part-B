@@ -10,6 +10,9 @@ public class enemy_2 extends Actor {
     public GreenfootImage enemyImage = getImage();
     public GreenfootImage playerDamageImage = new GreenfootImage("penguin-take-damage.png");
     player player; 
+    
+    public GreenfootSound deathSound = new GreenfootSound("enemy-death.mp3");
+    public GreenfootSound damageSound = new GreenfootSound("take-damage.mp3");
 
     public enemy_2(player main_player) {
         // Scales the images of the enemy
@@ -33,6 +36,7 @@ public class enemy_2 extends Actor {
         
         // Checks if enemy has no health left
         if(health <=0){
+            deathSound.play();
             getWorld().removeObject(this);
         }
 
@@ -49,8 +53,9 @@ public class enemy_2 extends Actor {
         // Checks if the player is near an enemy, and hence whether damage should be dealt
         player player2 = (player) getOneIntersectingObject(player.class);
         if(getOneObjectAtOffset(0, 0, player.class) != null) {
-            //add animation at a later date
+            
             currentlyDamaging = true;
+            damageSound.play();           
             MyWorld myWorld = (MyWorld) getWorld();
             HealthBar health = myWorld.getObjects(HealthBar.class).get(0);
             health.hitByEnemy();

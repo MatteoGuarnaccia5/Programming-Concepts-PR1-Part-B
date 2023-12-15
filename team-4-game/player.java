@@ -20,6 +20,10 @@ public class player extends Actor {
     public String[] walkingImages = {"penguin-walking1.png","penguin-walking2.png", "penguin-walking3.png"};
     public int currentImage = 0;
     
+    public GreenfootSound attackSound = new GreenfootSound("penguin-attack.mp3");
+    public GreenfootSound pickupItemHealth = new GreenfootSound("pickup-health.mp3");
+    public GreenfootSound pickupWeapon = new GreenfootSound("pickup-weapon.mp3");
+    public GreenfootSound bulletSound = new GreenfootSound("bullet.mp3");
     // Variables for the player size
     Integer width;
     Integer height;
@@ -112,9 +116,11 @@ public class player extends Actor {
         if(Greenfoot.isKeyDown("space"))
         {
             setImage(attackImage);
+            attackSound.play();
             Enemy enemy = (Enemy) getOneIntersectingObject(Enemy.class);
             if(enemy != null) {
-                enemy.health -= damage;                
+                enemy.health -= damage;
+                
             }
             
             
@@ -130,7 +136,9 @@ public class player extends Actor {
     public void regenHealth() {
         // Regenerates health if the player collects an item
         ItemHealth healthRegen = (ItemHealth) getOneIntersectingObject(ItemHealth.class);
-        if(healthRegen != null) {
+        if(healthRegen != null)
+        {
+            pickupItemHealth.play();
             MyWorld myWorld = (MyWorld) getWorld();
             HealthBar health = myWorld.getObjects(HealthBar.class).get(0);
             health.health += 10;
@@ -141,7 +149,8 @@ public class player extends Actor {
     public void collectWeapon() {
         // Sets players ability to 'shoot' to be true if collects the weapon item
         ItemWeapon weapon = (ItemWeapon) getOneIntersectingObject(ItemWeapon.class);
-        if(weapon != null) {
+        if(weapon != null){
+            pickupWeapon.play();
             getWorld().removeObject(weapon);
             hasWeapon = true;
             shotsLeft = 30;
@@ -151,6 +160,7 @@ public class player extends Actor {
     public void shoot() {
         // Shoots a bullet if the 'q' key is pressed
         if(hasWeapon && "q".equals(Greenfoot.getKey())){
+            bulletSound.play();
             shotsLeft -= 1;
             Bullet bullet = new Bullet(bulletSpeed);
             getWorld().addObject(bullet, getX(), getY());
