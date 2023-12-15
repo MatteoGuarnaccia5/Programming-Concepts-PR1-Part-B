@@ -1,13 +1,7 @@
-import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
-
-/**
- * Displays the round the user is currently playing.
- * 
- * Matteo Guarnaccia, William Brown, Yufan Kambang
- * 11/12/2023
- */
+import greenfoot.*;
 
 public class round_counter extends Actor {
+    
     int round;
     
     public round_counter(int round) {

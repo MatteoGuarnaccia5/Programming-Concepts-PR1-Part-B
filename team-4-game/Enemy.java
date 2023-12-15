@@ -1,12 +1,6 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.util.*;
 
-/**
- * An enemy (seahorse) which attacks the player.
- * 
- * @author Matteo Guarnaccia, William Brown, Yufan Kambang
- * @version 02/12/2023
- */
 public class Enemy extends Actor {
     // Variables for the enemy 
     int health = 10;
@@ -56,8 +50,7 @@ public class Enemy extends Actor {
     public void dealDamage(){
         // Checks if the player is near a seahorse, and hence whether damage should be dealt
         player player2 = (player) getOneIntersectingObject(player.class);
-        if(getOneObjectAtOffset(0, 0, player.class) != null)
-        {
+        if(getOneObjectAtOffset(0, 0, player.class) != null) {
             //add animation at a later date
             currentlyDamaging = true;
             MyWorld myWorld = (MyWorld) getWorld();

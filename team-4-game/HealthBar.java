@@ -1,10 +1,5 @@
-import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
-/**
- * A healthbar which represents the player health
- * 
- * @author Matteo Guarnaccia, William Brown, Yufan Kambang
- * @version 02/12/2023
- */
+import greenfoot.*;
+
 public class HealthBar extends Actor {
     // Variables for the health bar
     int health = 100;
@@ -20,7 +15,7 @@ public class HealthBar extends Actor {
         update();
     }
     
-    public void update(){
+    public void update() {
         // Checks the current health for the player, and changes the healthbar accordingly
         setImage(new GreenfootImage(healthBarWidth + 2, healthBarHeight +2));
         GreenfootImage myImage = getImage();
@@ -30,13 +25,12 @@ public class HealthBar extends Actor {
         myImage.fillRect(1,1 , health *pixelsPerHealthPoint, healthBarHeight);
         
         // Checks if health is 0
-        if(health <= 0){
+        if(health <= 0) {
             ((MyWorld)getWorld()).gameOver();
         }
     }
     
-    public void hitByEnemy()
-    {
+    public void hitByEnemy() {
         // If damage is done, take away some health 
         health -= 1.5;
     }
