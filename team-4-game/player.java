@@ -68,24 +68,20 @@ public class player extends Actor {
         int halfWidth = width / 2;
         
         // Checks if keys are being pressed by the user, and moves if relevant        
-        if (Greenfoot.isKeyDown("down") && !isAtEdge())
-        {
+        if (Greenfoot.isKeyDown("down") && !isAtEdge()) {
             y += speed;
         }
         
-        if (Greenfoot.isKeyDown("up") && y > speed)
-        {
+        if (Greenfoot.isKeyDown("up") && y > speed) {
             y -= speed;
         }
         
-        if (Greenfoot.isKeyDown("right") && !isAtEdge())
-        {
+        if (Greenfoot.isKeyDown("right") && !isAtEdge()) {
             x += speed;
             bulletSpeed = 4;
         }
         
-        if (Greenfoot.isKeyDown("left") && x > speed)
-        {
+        if (Greenfoot.isKeyDown("left") && x > speed) {
             x -= speed;
             bulletSpeed = -4;
         }
@@ -94,28 +90,26 @@ public class player extends Actor {
     
     public void animateWalking() {
         // Uses different image to enable the player to appear as if it is walking
-        if(getX()!=xPos || getY()!=yPos)
-        {
+        if(getX()!=xPos || getY()!=yPos) {
             currentImage ++;
-            if(currentImage >= walkingImages.length)
-            {
+            
+            if(currentImage >= walkingImages.length) {
             currentImage = 0;
             }
         
             GreenfootImage newImage = new GreenfootImage(walkingImages[currentImage]);
             newImage.scale(35,50);
         
-            if(getX()<xPos)
-            {
+            if(getX()<xPos) {
                 newImage.mirrorHorizontally();
             }
-        setImage(newImage);
+            
+            setImage(newImage);
         }
         
         xPos = getX();
         yPos = getY();
     }
-    
     
     public void attack(double damage) {
         // Checks if space bar is pressed, if so does damage to an enemy
@@ -153,7 +147,7 @@ public class player extends Actor {
     }
     
     public void collectWeapon() {
-        //sets players ability to 'shoot' to be true if collects the weapon item
+        // Sets players ability to 'shoot' to be true if collects the weapon item
         ItemWeapon weapon = (ItemWeapon) getOneIntersectingObject(ItemWeapon.class);
         if(weapon != null){
             pickupWeapon.play();
@@ -164,6 +158,7 @@ public class player extends Actor {
     }
     
     public void shoot() {
+        // Shoots a bullet if the 'q' key is pressed
         if(hasWeapon && "q".equals(Greenfoot.getKey())){
             bulletSound.play();
             shotsLeft -= 1;
@@ -171,11 +166,12 @@ public class player extends Actor {
             getWorld().addObject(bullet, getX(), getY());
             bullet.move(bulletSpeed * 5);
             
+            // Checks if weapon has run out of shots
             if(shotsLeft == 0){
-            hasWeapon = false;
-            MyWorld myWorld = (MyWorld) getWorld();
-            myWorld.weaponCounter = 0;
-        }
+                hasWeapon = false;
+                MyWorld myWorld = (MyWorld) getWorld();
+                myWorld.weaponCounter = 0;
+            }
         }
     }
 }

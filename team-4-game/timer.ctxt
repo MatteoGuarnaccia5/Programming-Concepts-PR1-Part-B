@@ -1,6 +1,5 @@
 #BlueJ class context
 comment0.target=timer
-comment0.text=\r\n\ A\ timer\ which\ can\ be\ used\ before\ a\ game\ begins\r\n\ \r\n\ @author\ Matteo\ Guarnaccia,\ William\ Brown,\ Yufan\ Kambang\r\n\ @version\ 02/12/2023\r\n
 comment1.params=seconds
 comment1.target=timer(int)
 comment2.params=

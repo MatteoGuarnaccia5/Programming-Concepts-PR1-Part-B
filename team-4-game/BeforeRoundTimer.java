@@ -1,11 +1,5 @@
-import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import greenfoot.*;
 
-/**
- * A timer used between rounds, to ready the user before the next
- * 
- * @author Matteo Guarnaccia, William Brown, Yufan Kambang
- * @version 02/12/2023
- */
 public class BeforeRoundTimer extends Actor {
     // Variables used in the timer
     int seconds;
