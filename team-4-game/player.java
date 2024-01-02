@@ -1,11 +1,5 @@
-import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import greenfoot.*;
 
-/**
- * A player which can move, kill enemies and also take damage. It can also pick up items.
- * 
- * @author Matteo Guarnaccia, William Brown, Yufan Kambang
- * @version 02/12/2023
- */
 public class player extends Actor {
     // Variables for the player
     private int playerHealth = 100;
@@ -20,14 +14,17 @@ public class player extends Actor {
     public String[] walkingImages = {"penguin-walking1.png","penguin-walking2.png", "penguin-walking3.png"};
     public int currentImage = 0;
     
+    // Initialise sounds for the player
     public GreenfootSound attackSound = new GreenfootSound("penguin-attack.mp3");
     public GreenfootSound pickupItemHealth = new GreenfootSound("pickup-health.mp3");
     public GreenfootSound pickupWeapon = new GreenfootSound("pickup-weapon.mp3");
     public GreenfootSound bulletSound = new GreenfootSound("bullet.mp3");
-    // Variables for the player size
+    
+    // Variables for the player size and speed
     Integer width;
     Integer height;
     Integer speed = 3;
+    
     public int bulletSpeed;
     
     // Keeping track of the player position
@@ -67,7 +64,7 @@ public class player extends Actor {
         int y = getY();
         int halfWidth = width / 2;
         
-        // Checks if keys are being pressed by the user, and moves if relevant        
+        // Checks if keys are being pressed by the user, and moves depending on which are pressed        
         if (Greenfoot.isKeyDown("down") && !isAtEdge()) {
             y += speed;
         }
@@ -89,7 +86,7 @@ public class player extends Actor {
     }
     
     public void animateWalking() {
-        // Uses different image to enable the player to appear as if it is walking
+        // Uses different images to enable the player to appear as if it is walking
         if(getX()!=xPos || getY()!=yPos) {
             currentImage ++;
             
@@ -113,21 +110,21 @@ public class player extends Actor {
     
     public void attack(double damage) {
         // Checks if space bar is pressed, if so does damage to an enemy
-        if(Greenfoot.isKeyDown("space"))
-        {
+        if(Greenfoot.isKeyDown("space")) {
             setImage(attackImage);
             attackSound.play();
             Enemy enemy = (Enemy) getOneIntersectingObject(Enemy.class);
+            
             if(enemy != null) {
                 enemy.health -= damage;
                 
             }
             
-            
             enemy_2 enemy_2 = (enemy_2) getOneIntersectingObject(enemy_2.class);
             if (enemy_2 != null) {
                 enemy_2.health -= damage;
             }
+            
             Greenfoot.delay(4);
         }
         setImage(image);
@@ -136,8 +133,7 @@ public class player extends Actor {
     public void regenHealth() {
         // Regenerates health if the player collects an item
         ItemHealth healthRegen = (ItemHealth) getOneIntersectingObject(ItemHealth.class);
-        if(healthRegen != null)
-        {
+        if(healthRegen != null) {
             pickupItemHealth.play();
             MyWorld myWorld = (MyWorld) getWorld();
             HealthBar health = myWorld.getObjects(HealthBar.class).get(0);

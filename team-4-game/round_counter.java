@@ -1,7 +1,7 @@
 import greenfoot.*;
 
 public class round_counter extends Actor {
-    
+    // Initialises variable to store current round
     int round;
     
     public round_counter(int round) {

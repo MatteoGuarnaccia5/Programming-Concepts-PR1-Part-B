@@ -1,7 +1,6 @@
 import greenfoot.*;
 
-public class ItemWeapon extends Actor
-{
+public class ItemWeapon extends Actor {
     public GreenfootImage image = getImage();
     
     public ItemWeapon() {

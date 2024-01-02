@@ -64,6 +64,8 @@ public class Enemy extends Actor {
             
             // Plays the sound for damage
             damageSound.play();
+            
+            // Retrieves and changes player health
             MyWorld myWorld = (MyWorld) getWorld();
             HealthBar health = myWorld.getObjects(HealthBar.class).get(0);
             health.hitByEnemy();
