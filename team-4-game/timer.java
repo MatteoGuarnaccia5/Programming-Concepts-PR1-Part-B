@@ -33,6 +33,6 @@ public class timer extends Actor {
     
     public void updateImage() {
         // Updates the image depending on how many seconds before the start of the game
-        setImage(new GreenfootImage("Time Before Start: "+timer/55, 50, Color.BLACK, Color.WHITE));
+        setImage(new GreenfootImage("Time Before Start: "+timer/55, 50, Color.BLACK, Color.PINK));
     }
 }
