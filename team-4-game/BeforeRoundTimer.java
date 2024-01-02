@@ -35,6 +35,6 @@ public class BeforeRoundTimer extends Actor {
     
     public void updateImage(int round) {
         // Updates the image when a second has passed
-        setImage(new GreenfootImage("Time Before Round "+round+": "+timer/55, 50, Color.BLACK, Color.WHITE));
+        setImage(new GreenfootImage("Time Before Round "+round+": "+timer/55, 50, Color.BLACK, Color.PINK));
     }
 }

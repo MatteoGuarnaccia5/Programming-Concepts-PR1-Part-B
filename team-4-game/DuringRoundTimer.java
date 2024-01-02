@@ -33,6 +33,6 @@ public class DuringRoundTimer extends Actor {
     
     public void updateImage() {
         // Updates the image when a second has passed
-        setImage(new GreenfootImage("Time Left: "+timer/55, 20, Color.BLACK, Color.WHITE));
+        setImage(new GreenfootImage("Time Left: "+timer/55, 20, Color.BLACK, Color.PINK));
     }
 }

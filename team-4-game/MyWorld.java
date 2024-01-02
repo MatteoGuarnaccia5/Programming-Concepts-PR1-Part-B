@@ -22,7 +22,7 @@ public class MyWorld extends World {
     Enemy enemy;
     enemy_2 enemy_2;
     
-    GreenfootImage background;
+    // Initiate variables for the music and sounds
     GreenfootSound backgroundMusic = new GreenfootSound("background-music.mp3");
     GreenfootSound gameOverSound = new GreenfootSound("game-over.mp3");
        
@@ -41,6 +41,8 @@ public class MyWorld extends World {
     public MyWorld() {    
         // Creates an area for the game
         super(1000, 600, 1);
+        
+        // Begins the background music
         backgroundMusic.setVolume(10);
         backgroundMusic.playLoop();
         
@@ -50,27 +52,27 @@ public class MyWorld extends World {
     }
     
     public void createPlayer() {
-        // Displays player and healthbar
+        // Displays player, healthbar and a counter which shows the current round
         addObject(main_player, 500, 300);
         addObject(playerHealthBar, 55, 15);
         addObject(round_counter, 62, 590);
     }
     
     public void act() {
-        
         // Checks if game has been started, and if timer has finished
         if (startGame == false) {
             if (intro.isDone == true) {
                 // Removes intro if user presses the enter key
                 removeObjects(getObjects(intro.class));
                 
+                // Checks if timer has been created, if not creates a timer
                 if (timer == null) {
                     timer = new timer(5);
                     addObject(timer, 500, 300);
                 }
                 
+                // Checks if timer has completed, if so begins the game
                 if (timer.checkDone() == true) {
-                    // Begin the game
                     createPlayer();
                     startGame = true;
                     startRound = true;
@@ -119,6 +121,7 @@ public class MyWorld extends World {
                         removeObjects(getObjects(pb_label.class));
                     }
                     else if (duringRoundTimer.checkDone() == true) {
+                        // If timer runs out, player loses and game is over
                         gameOver();
                     }
                 }
@@ -141,9 +144,11 @@ public class MyWorld extends World {
                         }
                     }
                     else if (duringRoundTimer.checkDone() == true) {
+                        // If timer runs out, player loses and game is over
                         gameOver();
                     }
                 }
+                // Increment the round counter by one
                 round_counter.update_round(round);
             }
         }
@@ -151,14 +156,14 @@ public class MyWorld extends World {
     
     public void incrementStats(Boolean polar_bear) {
         // Changes the spawn variables as round has been completed
-        round += 1;                
+        round++;                
         count = 1;
         
         if (polar_bear == true) {
-            spawn_cap_pb += 1;
+            spawn_cap_pb ++;
         }
         else {
-            spawn_cap += 1;
+            spawn_cap ++;
         }
     }
         
@@ -190,19 +195,6 @@ public class MyWorld extends World {
         else {
             spawnDone = true;
         }
-    }
-    
-    public void gameOver(){
-        // Called once healthbar is 0, dispays game over screen and how many rounds the user completed
-        backgroundMusic.stop();
-        gameOverSound.play();
-        removeObjects(getObjects(Actor.class));
-        GreenfootImage bg = getBackground();
-        GreenfootImage txtImg = new GreenfootImage("GAME OVER", 80, Color.WHITE, Color.BLACK);
-        bg.drawImage(txtImg, (bg.getWidth()-txtImg.getWidth())/2, (bg.getHeight()-txtImg.getHeight()-200)/2);
-        GreenfootImage roundsComp = new GreenfootImage("You completed "+(round-1)+" rounds!", 80, Color.WHITE, Color.BLACK);
-        bg.drawImage(roundsComp, (bg.getWidth()-roundsComp.getWidth())/2, (bg.getHeight()-roundsComp.getHeight()+200)/2);
-        Greenfoot.stop(); 
     }
     
     public void spawnHealthItem() {
@@ -258,5 +250,23 @@ public class MyWorld extends World {
                 case 7 : addObject(enemy_2, 0, getHeight()/2); break;
             }
         }
+    }
+    
+    public void gameOver() {
+        // Called once healthbar is 0 or timer has run out
+        // Stops music and begins the game over sound
+        backgroundMusic.stop();
+        gameOverSound.play();
+        
+        // Removes all the objects displayed on the screen
+        removeObjects(getObjects(Actor.class));
+        
+        // Creates a game over screen and displays it
+        GreenfootImage bg = getBackground();
+        GreenfootImage txtImg = new GreenfootImage("GAME OVER", 80, Color.WHITE, Color.BLACK);
+        bg.drawImage(txtImg, (bg.getWidth()-txtImg.getWidth())/2, (bg.getHeight()-txtImg.getHeight()-200)/2);
+        GreenfootImage roundsComp = new GreenfootImage("You completed "+(round-1)+" rounds!", 80, Color.WHITE, Color.BLACK);
+        bg.drawImage(roundsComp, (bg.getWidth()-roundsComp.getWidth())/2, (bg.getHeight()-roundsComp.getHeight()+200)/2);
+        Greenfoot.stop(); 
     }
 }

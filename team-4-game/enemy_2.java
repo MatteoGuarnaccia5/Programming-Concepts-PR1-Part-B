@@ -16,8 +16,8 @@ public class enemy_2 extends Actor {
 
     public enemy_2(player main_player) {
         // Scales the images of the enemy
-        enemyImage.scale(40,40);
-        playerDamageImage.scale(35,50);
+        enemyImage.scale(80,40);
+        playerDamageImage.scale(70,50);
         player = main_player;
         currentlyDamaging = false;
         long now = new Date().getTime();

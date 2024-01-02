@@ -7,10 +7,13 @@ public class Enemy extends Actor {
     public boolean currentlyDamaging; 
     long now;
     long now2;
+    
+    // Initialise images
     public GreenfootImage enemyImage = getImage();
     public GreenfootImage playerDamageImage = new GreenfootImage("penguin-take-damage.png");
     player player; 
     
+    // Initialise sounds needed
     public GreenfootSound damageSound = new GreenfootSound("take-damage.mp3");
     public GreenfootSound deathSound = new GreenfootSound("enemy-death.mp3");
 
@@ -20,6 +23,8 @@ public class Enemy extends Actor {
         enemyImage.scale(40,40);
         playerDamageImage.scale(35,50);
         player = main_player;
+        
+        // Sets currentlyDamaging to false, and collects current time
         currentlyDamaging = false;
         long now = new Date().getTime();
     }
@@ -56,6 +61,8 @@ public class Enemy extends Actor {
         player player2 = (player) getOneIntersectingObject(player.class);
         if(getOneObjectAtOffset(0, 0, player.class) != null) {
             currentlyDamaging = true;
+            
+            // Plays the sound for damage
             damageSound.play();
             MyWorld myWorld = (MyWorld) getWorld();
             HealthBar health = myWorld.getObjects(HealthBar.class).get(0);
